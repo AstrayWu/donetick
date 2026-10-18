@@ -11,6 +11,10 @@ WORKDIR /usr/src/app
 
 RUN apk --no-cache add ca-certificates tzdata
 
+# dsh: 云主机直连 proxy.golang.org 超时，构建时走 goproxy.cn
+ARG GOPROXY=https://goproxy.cn,direct
+ENV GOPROXY=${GOPROXY}
+
 COPY go.mod go.sum ./
 RUN go mod download && go mod verify
 
